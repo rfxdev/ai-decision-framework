@@ -1,0 +1,133 @@
+{
+  "$ref": "#/definitions/Page",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ClassificationTypes": {
+      "enum": [
+        "caution",
+        "dead_end",
+        "good",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "Feedback": {
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/FeedbackType"
+        }
+      },
+      "required": [
+        "content",
+        "type"
+      ],
+      "type": "object"
+    },
+    "FeedbackType": {
+      "enum": [
+        "consequence",
+        "reasoning",
+        "recommendation",
+        "risk"
+      ],
+      "type": "string"
+    },
+    "Page": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/definitions/PageID"
+        },
+        "question": {
+          "$ref": "#/definitions/Question"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "title"
+      ],
+      "type": "object"
+    },
+    "PageID": {
+      "enum": [
+        "bias-impact",
+        "data-structure",
+        "deterministic-outputs",
+        "domain-knowledge",
+        "failure-recovery",
+        "monitoring",
+        "pii-data-location",
+        "public-facing",
+        "risk-impact"
+      ],
+      "type": "string"
+    },
+    "Question": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/definitions/QuestionOption"
+          },
+          "type": "array"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "options",
+        "text"
+      ],
+      "type": "object"
+    },
+    "QuestionOption": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "$ref": "#/definitions/ClassificationTypes"
+        },
+        "feedback": {
+          "items": {
+            "$ref": "#/definitions/Feedback"
+          },
+          "type": "array"
+        },
+        "optionRef": {
+          "type": "string"
+        },
+        "question": {
+          "$ref": "#/definitions/Question"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "feedback",
+        "optionRef",
+        "text"
+      ],
+      "type": "object"
+    }
+  }
+}

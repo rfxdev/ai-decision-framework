@@ -1,0 +1,249 @@
+{
+  "$ref": "#/definitions/Assessment",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Assessment": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "description": "JSON Schema reference",
+          "format": "uri",
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/AssessmentMetadata"
+        },
+        "pages": {
+          "additionalProperties": false,
+          "properties": {
+            "bias-impact": {
+              "$ref": "#/definitions/Page"
+            },
+            "data-structure": {
+              "$ref": "#/definitions/Page"
+            },
+            "deterministic-outputs": {
+              "$ref": "#/definitions/Page"
+            },
+            "domain-knowledge": {
+              "$ref": "#/definitions/Page"
+            },
+            "failure-recovery": {
+              "$ref": "#/definitions/Page"
+            },
+            "monitoring": {
+              "$ref": "#/definitions/Page"
+            },
+            "pii-data-location": {
+              "$ref": "#/definitions/Page"
+            },
+            "public-facing": {
+              "$ref": "#/definitions/Page"
+            },
+            "risk-impact": {
+              "$ref": "#/definitions/Page"
+            }
+          },
+          "required": [
+            "bias-impact",
+            "data-structure",
+            "deterministic-outputs",
+            "domain-knowledge",
+            "failure-recovery",
+            "monitoring",
+            "pii-data-location",
+            "public-facing",
+            "risk-impact"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "metadata",
+        "pages"
+      ],
+      "type": "object"
+    },
+    "AssessmentMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/AssessmentSection"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description",
+        "sections",
+        "title"
+      ],
+      "type": "object"
+    },
+    "AssessmentSection": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "pageOrder": {
+          "items": {
+            "$ref": "#/definitions/PageID"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description",
+        "id",
+        "pageOrder",
+        "title"
+      ],
+      "type": "object"
+    },
+    "ClassificationTypes": {
+      "enum": [
+        "caution",
+        "dead_end",
+        "good",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "Feedback": {
+      "additionalProperties": false,
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/FeedbackType"
+        }
+      },
+      "required": [
+        "content",
+        "type"
+      ],
+      "type": "object"
+    },
+    "FeedbackType": {
+      "enum": [
+        "consequence",
+        "reasoning",
+        "recommendation",
+        "risk"
+      ],
+      "type": "string"
+    },
+    "Page": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/definitions/PageID"
+        },
+        "question": {
+          "$ref": "#/definitions/Question"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "title"
+      ],
+      "type": "object"
+    },
+    "PageID": {
+      "enum": [
+        "bias-impact",
+        "data-structure",
+        "deterministic-outputs",
+        "domain-knowledge",
+        "failure-recovery",
+        "monitoring",
+        "pii-data-location",
+        "public-facing",
+        "risk-impact"
+      ],
+      "type": "string"
+    },
+    "Question": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/definitions/QuestionOption"
+          },
+          "type": "array"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "options",
+        "text"
+      ],
+      "type": "object"
+    },
+    "QuestionOption": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "$ref": "#/definitions/ClassificationTypes"
+        },
+        "feedback": {
+          "items": {
+            "$ref": "#/definitions/Feedback"
+          },
+          "type": "array"
+        },
+        "optionRef": {
+          "type": "string"
+        },
+        "question": {
+          "$ref": "#/definitions/Question"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "feedback",
+        "optionRef",
+        "text"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,1213 @@
+{
+  "$schema": "../../schema/assessment.schema.json",
+  "id": "ai-suitability-assessment",
+  "metadata": {
+    "title": "AI Suitability Assessment",
+    "description": "Evaluate whether Gen AI is right for your use case",
+    "sections": [
+      {
+        "id": "technical-feasibility",
+        "title": "Technical Feasibility",
+        "description": "Determine if AI is the right technical solution for your problem",
+        "pageOrder": [
+          "data-structure",
+          "deterministic-outputs",
+          "domain-knowledge"
+        ]
+      },
+      {
+        "id": "risk-safety",
+        "title": "Risk and Safety Assessment",
+        "description": "Evaluate potential consequences of AI failures and required safeguards",
+        "pageOrder": ["risk-impact", "failure-recovery", "bias-impact"]
+      },
+      {
+        "id": "implementation-operations",
+        "title": "Implementation and Operations",
+        "description": "Assess organisational capability to build and maintain the AI solution",
+        "pageOrder": ["monitoring", "pii-data-location", "public-facing"]
+      }
+    ]
+  },
+  "pages": {
+    "data-structure": {
+      "id": "data-structure",
+      "title": "Data Structure",
+      "question": {
+        "id": "data-structure",
+        "text": "Does your use case involve mostly structured and consistently formatted data (databases, spreadsheets, logs)?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - my data is already structured",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Having structured data is advantageous as it provides a solid foundation for analysis, but the right approach depends on the complexity of your requirements"
+              }
+            ],
+            "question": {
+              "id": "traditional-software",
+              "text": "Could this task be solved with traditional software instead of AI?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - rules or queries could handle this",
+                  "classification": "dead_end",
+
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Traditional software solutions are more predictable, maintainable, and cost-effective for deterministic tasks with structured data"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Adding AI introduces unnecessary latency, costs, and unpredictable outputs where consistent, deterministic results are preferred"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "AI decision-making operates as an opaque black box while traditional software provides transparent, auditable logic that's easier to maintain and debug"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Use traditional rule-based systems, database queries, or workflow automation instead"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - I need AI's pattern recognition capabilities",
+                  "classification": "good",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "AI excels at finding complex patterns, relationships, and insights in structured data that rule-based systems cannot detect, making it ideal for advanced analytics and decision-making tasks"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "AI models may overfit to your specific structured dataset, reducing their ability to generalise to new or slightly different data",
+                      "mitigation": "Use proper train/validation/test splits and cross-validation techniques to ensure model generalisability"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "As your structured data evolves over time, the AI model may need retraining to maintain performance",
+                      "mitigation": "Implement data drift monitoring and establish regular model retraining schedules"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "AI models may include irrelevant features or miss important relationships in your structured data",
+                      "mitigation": "Invest in thorough feature engineering and validation of model inputs and outputs"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Leverage your existing data quality and structure as a foundation for more sophisticated AI analysis"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Focus on feature engineering and data relationships rather than basic preprocessing"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Establish clear success metrics for the insights or patterns you're trying to discover"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - I'm working with unstructured data",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Gen AI excels at extracting patterns, meaning, and structure from unstructured data - this is exactly what these models were designed for"
+              },
+              {
+                "type": "risk",
+                "content": "AI may generate plausible but incorrect interpretations of unstructured data (hallucination)",
+                "mitigation": "Implement robust validation and monitoring systems"
+              },
+              {
+                "type": "risk",
+                "content": "Higher computational costs for processing unstructured inputs",
+                "mitigation": "Budget for increased processing costs and evaluate cost-effectiveness during pilot"
+              },
+              {
+                "type": "risk",
+                "content": "May require custom model training or fine-tuning for domain-specific unstructured data",
+                "mitigation": "Start with pre-trained models and evaluate custom training needs based on pilot results"
+              },
+              {
+                "type": "recommendation",
+                "content": "Begin with a pilot to validate AI effectiveness on your specific unstructured data"
+              },
+              {
+                "type": "recommendation",
+                "content": "Establish clear validation criteria for AI outputs"
+              },
+              {
+                "type": "recommendation",
+                "content": "Plan for iterative improvement as you gather more data"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "risk-impact": {
+      "id": "risk-impact",
+      "title": "Risk Impact",
+      "question": {
+        "id": "risk-impact",
+        "text": "Does the use case involve high-risk outcomes (e.g. safety, legal, ethical, regulatory, or critical infrastructure implications)?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - failures could have serious consequences",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "High-risk scenarios require careful consideration of human oversight to prevent serious safety, legal, ethical, or regulatory consequences from AI errors"
+              }
+            ],
+            "question": {
+              "id": "oversight-scalability",
+              "text": "Would the required human oversight make the solution impractical to scale?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - human review would create bottlenecks",
+                  "classification": "dead_end",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When high-stakes decisions require extensive human oversight that can't scale efficiently, the AI solution becomes operationally unviable"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Creates workflow bottlenecks that defeat the purpose of automation while significantly increasing operational costs"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Risk of overwhelmed human reviewers making errors under time pressure, potentially causing the very problems the oversight was meant to prevent"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Explore traditional software solutions or break down the problem into lower-risk components"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - we can manage the oversight requirements",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "High-risk scenarios with manageable human oversight can work effectively using a human-led approach where AI provides assistance and recommendations rather than making final decisions"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Implement human-led processes with AI-in-the-loop support"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Design clear handoff points between AI analysis and human decision-making"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Establish robust training for humans interpreting AI recommendations"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Create audit trails for all human decisions supported by AI"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Humans may over-rely on AI recommendations without proper scrutiny",
+                      "mitigation": "Train reviewers to critically evaluate AI outputs and maintain decision independence"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Human oversight may become inconsistent across different reviewers",
+                      "mitigation": "Establish clear guidelines and regular calibration sessions for human reviewers"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - outcomes are low-stakes",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "For low-stakes outcomes, AI can take the primary role with humans providing oversight and intervention when needed, since the consequences of errors are manageable"
+              },
+              {
+                "type": "recommendation",
+                "content": "Implement AI-led processes with human-in-the-loop oversight"
+              },
+              {
+                "type": "recommendation",
+                "content": "Set up monitoring and alerting for unusual AI outputs"
+              },
+              {
+                "type": "recommendation",
+                "content": "Establish clear escalation paths when AI confidence is low"
+              },
+              {
+                "type": "recommendation",
+                "content": "Design workflows where humans can easily review and correct AI decisions"
+              },
+              {
+                "type": "risk",
+                "content": "AI may still make errors that accumulate over time",
+                "mitigation": "Regular performance monitoring and periodic human review of outputs"
+              },
+              {
+                "type": "risk",
+                "content": "\"Low-stakes\" assumptions may change as the use case evolves",
+                "mitigation": "Regularly reassess risk levels as the system scales"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "failure-recovery": {
+      "id": "failure-recovery",
+      "title": "Failure Recovery",
+      "question": {
+        "id": "error-criticality",
+        "text": "How critical is it that users can recover from AI errors in your use case?",
+        "options": [
+          {
+            "optionRef": "critical",
+            "text": "Critical - users need to be able to handle failures",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "When error recovery is critical to user success, the effectiveness of your failure handling mechanisms will determine whether the solution is viable"
+              }
+            ],
+            "question": {
+              "id": "failure-handling",
+              "text": "Can users both detect AI failures and successfully work around them?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - users can identify and resolve failures",
+                  "classification": "good",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When error recovery is critical and users can effectively detect and resolve AI failures, the system provides a robust user experience with appropriate fallback mechanisms"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Design clear error indicators so users know when AI has failed"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Provide intuitive recovery options (retry, rephrase, escalate, manual override)"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Create user training or guidance for handling common failure scenarios"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Implement logging to track failure patterns and improve the system"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Users may become frustrated with frequent recovery actions",
+                      "mitigation": "Monitor failure frequency and optimise AI performance to minimise recovery needs"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Recovery mechanisms may become complex or confusing over time",
+                      "mitigation": "Regularly test and simplify user recovery workflows"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - detection or workarounds are problematic",
+                  "classification": "dead_end",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When users can't reliably detect AI failures or effectively work around them, the system becomes unreliable for critical tasks"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Users may act on incorrect AI outputs without realising it, leading to cascading errors in their work"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Users become blocked when AI fails with no clear recovery path, undermining system reliability and user trust"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "not-critical",
+            "text": "Not critical - some error rate is acceptable",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "For use cases where some level of AI error is expected and tolerable, perfect accuracy isn't required for success"
+              },
+              {
+                "type": "recommendation",
+                "content": "Set clear expectations about acceptable error rates with stakeholders"
+              },
+              {
+                "type": "recommendation",
+                "content": "Design processes that can handle imperfect AI outputs gracefully"
+              },
+              {
+                "type": "risk",
+                "content": "Error rates may increase over time as data distributions or conditions change",
+                "mitigation": "Establish specific monitoring thresholds (e.g., error rate >5%) that trigger performance reviews and model updates"
+              },
+              {
+                "type": "risk",
+                "content": "\"Acceptable\" error assumptions may not hold as the system scales to higher volumes",
+                "mitigation": "Define concrete criteria for when to reassess error tolerance based on usage metrics and business impact"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "bias-impact": {
+      "id": "bias-impact",
+      "title": "Bias Impact",
+      "question": {
+        "id": "bias-impact",
+        "text": "Could bias meaningfully influence the AI's decisions or outcomes (e.g., affecting people, recommendations, content generation)?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - decisions could affect people or contain subjective elements",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "When AI outputs can affect people or involve subjective judgments, bias mitigation becomes critical for fair and ethical outcomes"
+              }
+            ],
+            "question": {
+              "id": "bias-mitigation-capability",
+              "text": "Can you implement effective bias detection and mitigation measures?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - we can implement bias monitoring and mitigation",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "With proper bias mitigation measures, AI systems affecting people can operate fairly, though this requires ongoing vigilance and systematic approaches"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Establish diverse testing datasets that represent all affected populations"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Implement regular bias audits with clear metrics and thresholds for acceptable performance"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Create feedback mechanisms for users to report perceived bias or unfair outcomes"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Involve diverse stakeholders in testing and validation processes"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Bias can be subtle and emerge in unexpected ways as the system encounters new scenarios",
+                      "mitigation": "Implement continuous monitoring with automated alerts for statistical disparities across demographic groups"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Initial bias testing may miss important edge cases or minority populations",
+                      "mitigation": "Regularly expand testing scenarios and actively seek feedback from underrepresented groups"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Bias mitigation efforts may inadvertently introduce new forms of unfairness",
+                      "mitigation": "Use multiple bias metrics and validate that improvements in one area don't worsen others"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - we lack resources or expertise for bias mitigation",
+                  "classification": "dead_end",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Without adequate bias mitigation capabilities, AI systems that affect people create unacceptable risks of unfair or discriminatory outcomes"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Risk of perpetuating or amplifying existing societal biases, potentially causing harm to individuals or groups"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Legal and reputational risks from discriminatory AI decisions, especially in regulated domains"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Erosion of user trust and potential backlash when bias issues surface"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Develop bias mitigation expertise or partner with specialists before proceeding with AI deployment"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - outputs are objective or technical",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "For objective, technical tasks like code generation, data processing, or mathematical calculations, AI bias has minimal impact on output quality or fairness"
+              },
+              {
+                "type": "recommendation",
+                "content": "Focus on accuracy and performance metrics rather than bias mitigation"
+              },
+              {
+                "type": "recommendation",
+                "content": "Monitor for technical correctness and consistency across different input formats"
+              },
+              {
+                "type": "risk",
+                "content": "Even technical outputs may contain subtle biases if training data was skewed",
+                "mitigation": "Test AI performance across diverse technical scenarios and edge cases to ensure consistent quality"
+              },
+              {
+                "type": "risk",
+                "content": "Assumptions about what constitutes 'objective' may miss hidden bias vectors",
+                "mitigation": "Periodically reassess whether your use case truly has no human impact or subjective elements"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "domain-knowledge": {
+      "id": "domain-knowledge",
+      "title": "Domain Knowledge",
+      "question": {
+        "id": "domain-specificity",
+        "text": "Does your use case require specific domain knowledge that general AI models are unlikely to have (specialised terminology, proprietary processes, niche expertise)?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - requires specialised domain knowledge",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Specialised domain knowledge typically requires custom training, fine-tuning, or significant solution engineering, which introduces additional complexity and costs"
+              }
+            ],
+            "question": {
+              "id": "cost-benefit-analysis",
+              "text": "Will the time and cost savings from AI likely outweigh the investment in custom development and ongoing maintenance?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - benefits justify the investment",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When benefits outweigh costs, custom domain-specific AI can provide significant value, though it requires careful planning and resource management"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Start with a pilot to validate technical feasibility and business value before full development"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Secure domain expert commitment and invest in high-quality training data collection"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Plan for ongoing model maintenance and regular performance evaluation"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Development timelines and costs often exceed initial estimates for custom AI projects",
+                      "mitigation": "Build in buffer time and budget, validate assumptions early with prototypes"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Custom models require ongoing maintenance as domain knowledge evolves",
+                      "mitigation": "Establish clear processes for regular model evaluation and retraining schedules"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - development costs would exceed the benefits",
+                  "classification": "dead_end",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When custom AI development costs exceed the expected benefits, the solution lacks economic viability"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "High upfront costs for data collection, model training, and specialised expertise without proportional returns"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Ongoing maintenance costs for model updates, retraining, and domain knowledge evolution"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Resource drain that could be better allocated to higher-impact initiatives"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Consider whether the problem can be solved with existing tools or simplified to use general AI capabilities"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - general knowledge should be sufficient",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "For use cases within general AI knowledge domains, pre-trained models can provide effective solutions without additional customisation"
+              },
+              {
+                "type": "recommendation",
+                "content": "Start with off-the-shelf AI models and evaluate their performance before considering customisation"
+              },
+              {
+                "type": "recommendation",
+                "content": "Focus on prompt engineering and workflow optimisation rather than model training"
+              },
+              {
+                "type": "recommendation",
+                "content": "Leverage existing AI capabilities through APIs and established platforms"
+              },
+              {
+                "type": "risk",
+                "content": "General models may lack nuance for your specific business context or terminology",
+                "mitigation": "Test thoroughly with your actual use cases and implement feedback loops to identify knowledge gaps"
+              },
+              {
+                "type": "risk",
+                "content": "Assumptions about 'general knowledge' may miss important domain-specific requirements",
+                "mitigation": "Involve domain experts in testing to validate that general AI knowledge meets your quality standards"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "monitoring": {
+      "id": "monitoring",
+      "title": "Monitoring and Maintenance",
+      "question": {
+        "id": "monitoring-requirements",
+        "text": "Will the AI require regular monitoring, updates, or retraining (due to changing data, evolving requirements, or performance drift)?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - ongoing monitoring and updates needed",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Systems requiring regular monitoring and updates need dedicated resources for ongoing maintenance, which affects long-term viability"
+              }
+            ],
+            "question": {
+              "id": "maintenance-viability",
+              "text": "Can you sustain the ongoing monitoring and maintenance effort required?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - we can manage the maintenance requirements",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "With proper maintenance capabilities, regularly updated AI systems can remain effective and valuable, though this requires sustained commitment and resources"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Establish clear monitoring metrics and automated alerting for performance degradation"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Create maintenance schedules with defined triggers for retraining or updates"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Build internal expertise or secure ongoing support partnerships for system maintenance"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Maintenance requirements may increase over time as the system becomes more complex",
+                      "mitigation": "Design maintainable architectures and document all processes to reduce long-term maintenance burden"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Resource allocation for maintenance may compete with other priorities",
+                      "mitigation": "Establish dedicated maintenance budgets and treat ongoing costs as essential operational expenses"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - we lack resources for ongoing maintenance",
+                  "classification": "dead_end",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Without adequate resources for ongoing monitoring and maintenance, AI systems requiring regular updates will degrade and eventually fail"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Model performance will deteriorate over time as data patterns change and requirements evolve"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "System reliability becomes unpredictable without proper monitoring and maintenance"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Consider simpler solutions that require less ongoing maintenance or build maintenance capabilities before proceeding"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - stable requirements and data",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "For use cases with stable data patterns and requirements, AI models can operate effectively with minimal ongoing maintenance"
+              },
+              {
+                "type": "recommendation",
+                "content": "Set up basic performance monitoring to detect any unexpected changes"
+              },
+              {
+                "type": "recommendation",
+                "content": "Plan periodic reviews to confirm assumptions about stability remain valid"
+              },
+              {
+                "type": "risk",
+                "content": "Even 'stable' environments may experience gradual changes that affect AI performance",
+                "mitigation": "Implement automated alerts for performance metrics falling below acceptable thresholds"
+              },
+              {
+                "type": "risk",
+                "content": "Assumptions about stability may prove incorrect as the system scales or ages",
+                "mitigation": "Schedule quarterly reviews to reassess monitoring needs and performance trends"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "pii-data-location": {
+      "id": "pii-data-location",
+      "title": "Data Privacy and Location Requirements",
+      "question": {
+        "id": "pii-data-location",
+        "text": "Are you planning to process PII (personally identifiable information), and do you have specific requirements about where your data is processed or stored?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - we process PII and/or have data location requirements",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Data sensitivity and location requirements significantly impact your hosting options - need to understand your specific control needs"
+              }
+            ],
+            "question": {
+              "id": "data-control-level",
+              "text": "What level of control do you need over your data processing and storage?",
+              "options": [
+                {
+                  "optionRef": "basic-compliance",
+                  "text": "Basic compliance - we need data processed in specific regions (e.g., EU data stays in EU)",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Many cloud providers offer region-specific processing, but compliance requirements add complexity and may limit your provider options"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Research providers' data residency guarantees, compliance certifications (GDPR, HIPAA, SOC 2), and verify their terms actually guarantee data location"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Some providers may move data for redundancy or processing despite regional claims",
+                      "mitigation": "Ensure contractual guarantees match your compliance needs"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "moderate-control",
+                  "text": "Moderate control - we need guaranteed data isolation and audit trails",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Private cloud or dedicated instances provide isolation whilst maintaining managed service benefits, but require higher investment"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Evaluate private cloud offerings (AWS Private Cloud, Azure Dedicated Host) or dedicated tenant solutions that provide isolation without full self-management"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Significantly higher costs than standard cloud services",
+                      "mitigation": "Ensure you understand what 'isolation' actually means in your chosen solution's architecture"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "full-control",
+                  "text": "Full control - we need complete oversight of data processing, storage, and model execution",
+                  "classification": "unknown",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Full control requires self-hosting with complete infrastructure management - whether this is viable depends on your technical capabilities"
+                    }
+                  ],
+                  "question": {
+                    "id": "technical-capability",
+                    "text": "Do you have the technical infrastructure and expertise to manage AI model hosting and scaling?",
+                    "options": [
+                      {
+                        "optionRef": "yes",
+                        "text": "Yes - we have dedicated DevOps/MLOps teams and infrastructure",
+                        "classification": "caution",
+                        "feedback": [
+                          {
+                            "type": "reasoning",
+                            "content": "Self-hosting provides complete control but requires substantial ongoing technical investment and expertise"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Plan for open-source model deployment (Llama, Mistral), container orchestration, model versioning, and security patch management. Budget for GPU infrastructure and scaling capabilities"
+                          },
+                          {
+                            "type": "risk",
+                            "content": "High operational overhead and potential security vulnerabilities if not managed properly",
+                            "mitigation": "Ensure your team can handle 24/7 monitoring, incident response, and model updates long-term"
+                          }
+                        ]
+                      },
+                      {
+                        "optionRef": "no",
+                        "text": "No - we'd need to build this capability",
+                        "classification": "dead_end",
+
+                        "feedback": [
+                          {
+                            "type": "reasoning",
+                            "content": "Self-hosting AI models requires substantial technical infrastructure, specialised expertise, and ongoing operational commitment that takes months to build properly"
+                          },
+                          {
+                            "type": "consequence",
+                            "content": "Without proper capabilities, you risk security vulnerabilities, poor performance, system downtime, and unsustainable maintenance costs"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Reconsider whether your data requirements truly necessitate full self-hosting - private cloud or dedicated tenant solutions may meet your needs with far less risk"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - data is non-sensitive and location isn't a concern",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Standard cloud AI services provide excellent performance and reliability for non-sensitive data"
+              },
+              {
+                "type": "recommendation",
+                "content": "Focus on API integration and cost optimisation rather than infrastructure complexity"
+              },
+              {
+                "type": "risk",
+                "content": "Monitor usage costs and implement rate limiting to prevent unexpected bills"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "public-facing": {
+      "id": "public-facing",
+      "title": "Public-Facing AI",
+      "question": {
+        "id": "public-facing-use",
+        "text": "Is the AI intended for public-facing use (directly accessible to customers, website visitors, or external users)?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - the AI will interact directly with external users",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Public-facing AI systems carry additional risks from hallucinations, misuse, and reputational exposure that require careful safeguarding"
+              }
+            ],
+            "question": {
+              "id": "reputational-risk",
+              "text": "Could hallucinations or model hijacking lead to reputational damage or other serious consequences?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - inappropriate outputs could damage our reputation",
+                  "classification": "unknown",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When public-facing AI poses reputational risks, your capability to implement safeguards becomes critical for protecting your organisation"
+                    }
+                  ],
+                  "question": {
+                    "id": "safeguard-capability",
+                    "text": "Can you implement real-time content filtering, user reporting systems, and 24/7 monitoring for your public-facing AI?",
+                    "options": [
+                      {
+                        "optionRef": "yes",
+                        "text": "Yes - we can implement these safety measures",
+                        "classification": "caution",
+                        "feedback": [
+                          {
+                            "type": "reasoning",
+                            "content": "With robust safeguards, public-facing AI can operate safely, though it requires ongoing vigilance and continuous improvement of protective measures"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Implement comprehensive content filtering, abuse detection, and automated escalation systems"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Establish clear usage policies, rate limiting, and user reporting mechanisms"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Create incident response plans for handling AI failures or inappropriate outputs"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Regular security testing including adversarial prompting and red team exercises"
+                          },
+                          {
+                            "type": "risk",
+                            "content": "Even robust safeguards may be bypassed by sophisticated users or novel attack vectors",
+                            "mitigation": "Continuously update safeguards based on emerging threats and maintain active monitoring for unusual patterns"
+                          },
+                          {
+                            "type": "risk",
+                            "content": "Safeguards may introduce latency or reduce user experience quality",
+                            "mitigation": "Balance security measures with usability through careful testing and optimisation"
+                          },
+                          {
+                            "type": "risk",
+                            "content": "Over-restrictive safeguards may prevent legitimate use cases",
+                            "mitigation": "Regularly review and calibrate filtering rules based on real usage patterns and false positive rates"
+                          }
+                        ]
+                      },
+                      {
+                        "optionRef": "no",
+                        "text": "No - we lack resources or expertise for these measures",
+                        "classification": "dead_end",
+                        "feedback": [
+                          {
+                            "type": "reasoning",
+                            "content": "Without the capability to implement essential safety measures, public-facing AI with reputational risk creates unacceptable exposure to serious consequences"
+                          },
+                          {
+                            "type": "consequence",
+                            "content": "Risk of public embarrassment, customer complaints, and regulatory scrutiny from unfiltered AI outputs or security breaches"
+                          },
+                          {
+                            "type": "consequence",
+                            "content": "Potential legal liability if AI outputs cause harm, discrimination, or violate regulations without proper monitoring"
+                          },
+                          {
+                            "type": "consequence",
+                            "content": "Brand damage and loss of customer trust that can persist long after incidents are resolved"
+                          },
+                          {
+                            "type": "recommendation",
+                            "content": "Build internal capabilities or secure partnerships for AI safety before considering public deployment"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - limited reputational impact expected",
+                  "classification": "good",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Public-facing AI with limited reputational risk can operate with standard safeguards whilst focusing on user experience and functionality"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Implement basic content filtering and user feedback mechanisms"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Monitor user interactions for patterns that might indicate emerging issues"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Establish clear terms of service and acceptable use policies"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Assumptions about low reputational impact may prove incorrect as usage scales",
+                      "mitigation": "Regularly reassess risk levels and upgrade safeguards as your user base grows"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Even low-stakes failures can accumulate into larger issues over time",
+                      "mitigation": "Track failure patterns and user complaints to identify systemic problems early"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - internal use only by trained staff",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "Internal-only AI systems have reduced exposure to malicious use and benefit from trained users who can recognise and manage AI limitations"
+              },
+              {
+                "type": "recommendation",
+                "content": "Train staff to recognise hallucinations, understand AI limitations, and implement appropriate verification processes"
+              },
+              {
+                "type": "recommendation",
+                "content": "Establish clear guidelines for when AI outputs should be verified or escalated"
+              },
+              {
+                "type": "recommendation",
+                "content": "Create feedback mechanisms for staff to report AI quality issues"
+              },
+              {
+                "type": "risk",
+                "content": "Staff may become over-reliant on AI outputs without proper verification",
+                "mitigation": "Provide regular training on AI limitations and maintain verification requirements for critical decisions"
+              },
+              {
+                "type": "risk",
+                "content": "Internal systems may eventually be exposed to external users as requirements evolve",
+                "mitigation": "Design with potential future public exposure in mind and reassess safeguards if usage scope changes"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "deterministic-outputs": {
+      "id": "deterministic-outputs",
+      "title": "Output Consistency",
+      "question": {
+        "id": "deterministic-outputs",
+        "text": "Are deterministic outputs (the same input always produces the same output) critical for your use case?",
+        "options": [
+          {
+            "optionRef": "yes",
+            "text": "Yes - consistent outputs are essential",
+            "classification": "unknown",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "When deterministic outputs are critical, the inherent randomness in generative AI models becomes a significant challenge that requires careful consideration"
+              }
+            ],
+            "question": {
+              "id": "determinism-feasibility",
+              "text": "Can you implement sufficient controls to achieve the consistency your use case requires?",
+              "options": [
+                {
+                  "optionRef": "yes",
+                  "text": "Yes - we can implement temperature controls, seeds, and validation",
+                  "classification": "caution",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "Whilst AI models can be configured for more consistent outputs, achieving true determinism requires significant technical controls and may limit the model's capabilities"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Set temperature to 0 or very low values to reduce randomness in outputs"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Use fixed random seeds where supported by your AI provider"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Implement output validation and retry mechanisms when results vary unexpectedly"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Design prompts to be highly specific and structured to encourage consistent responses"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Consider fine-tuning models on your specific use case to improve output consistency"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Even with controls, generative AI models may still produce variations due to their fundamental architecture",
+                      "mitigation": "Implement robust testing to validate acceptable consistency levels and establish clear thresholds for output variation"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Forcing determinism may reduce the AI's ability to handle edge cases or novel inputs effectively",
+                      "mitigation": "Balance consistency requirements with model flexibility through careful prompt engineering and validation rules"
+                    },
+                    {
+                      "type": "risk",
+                      "content": "Some AI providers may not support the level of deterministic control you require",
+                      "mitigation": "Evaluate different providers and models to find those that offer the strongest consistency guarantees for your use case"
+                    }
+                  ]
+                },
+                {
+                  "optionRef": "no",
+                  "text": "No - we cannot achieve the required consistency",
+                  "classification": "dead_end",
+                  "feedback": [
+                    {
+                      "type": "reasoning",
+                      "content": "When deterministic outputs are essential but cannot be reliably achieved, generative AI becomes unsuitable for the use case"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Inconsistent outputs in critical systems can lead to unpredictable behaviour, failed integrations, and unreliable user experiences"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Downstream systems expecting consistent inputs may fail or produce incorrect results when AI outputs vary"
+                    },
+                    {
+                      "type": "consequence",
+                      "content": "Users lose trust in the system when identical inputs produce different outputs without clear reasoning"
+                    },
+                    {
+                      "type": "recommendation",
+                      "content": "Consider traditional rule-based systems, deterministic algorithms, or database lookups that can guarantee consistent outputs"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "optionRef": "no",
+            "text": "No - variation in outputs is acceptable or even beneficial",
+            "classification": "good",
+            "feedback": [
+              {
+                "type": "reasoning",
+                "content": "For creative tasks, content generation, and exploratory use cases, the natural variation in AI outputs can enhance quality and provide valuable diversity"
+              },
+              {
+                "type": "recommendation",
+                "content": "Leverage AI's creative capabilities by allowing some randomness in outputs"
+              },
+              {
+                "type": "recommendation",
+                "content": "Consider implementing multiple output generation to give users choice or improve quality"
+              },
+              {
+                "type": "recommendation",
+                "content": "Use variation as a feature - generate multiple alternatives for brainstorming or creative tasks"
+              },
+              {
+                "type": "recommendation",
+                "content": "Focus on output quality and relevance rather than exact consistency"
+              },
+              {
+                "type": "risk",
+                "content": "Too much variation may confuse users or make the system appear unreliable",
+                "mitigation": "Set appropriate temperature levels to balance creativity with coherence, and provide users with context about why outputs may vary"
+              },
+              {
+                "type": "risk",
+                "content": "Inconsistent outputs may complicate testing and quality assurance processes",
+                "mitigation": "Develop testing frameworks that evaluate output quality and appropriateness rather than exact matching"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

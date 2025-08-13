@@ -1,0 +1,42 @@
+{
+  "name": "ai-decision-framework",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "24.5.0",
+    "npm": ">=11.0.0"
+  },
+  "volta": {
+    "node": "24.5.0"
+  },
+  "scripts": {
+    "check-all": "npm run lint && npm run format:check",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "lint": "eslint . --ext ts,tsx",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "schema:generate": "ts-json-schema-generator --path src/interfaces/assessment.ts --tsconfig tsconfig.json --expose export",
+    "schema:generate:all": "npx rimraf schema && npm run schema:generate:assessment && npm run schema:generate:page && npm run schema:generate:option",
+    "schema:generate:assessment": "npm run schema:generate -- --type Assessment --out schema/assessment.schema.json && node tools/enhance-schema.js",
+    "schema:generate:option": "npm run schema:generate -- --type QuestionOption --out schema/option.schema.json",
+    "schema:generate:page": "npm run schema:generate -- --type Page --out schema/page.schema.json"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.31.0",
+    "@types/eslint__js": "8.42.3",
+    "eslint": "9.31.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-import-resolver-typescript": "4.4.4",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-perfectionist": "4.15.0",
+    "jiti": "2.5.1",
+    "prettier": "3.6.2",
+    "rimraf": "6.0.1",
+    "ts-json-schema-generator": "2.4.0",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.38.0"
+  },
+  "private": true
+}
