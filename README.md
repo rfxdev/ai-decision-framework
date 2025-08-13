@@ -2,13 +2,13 @@
 
 **Stop guessing. Start making informed AI adoption decisions.**
 
-A structured evaluation platform that guides teams through the critical factors determining AI project success. Get clear, evidence-based recommendations in minutes—not months of trial and error.
+A structured evaluation platform that guides teams through the critical factors determining AI project success. Get clear, evidence-based recommendations in minutes - not months of trial and error.
 
 ## The Problem
 
 Teams are rushing into AI implementations without systematic evaluation processes. The result? Expensive failures, missed opportunities, and growing scepticism about AI's practical value.
 
-Most AI project failures aren't due to technical limitations—they stem from fundamental mismatches between the technology and the use case. Teams discover these incompatibilities too late: after budgets are allocated, expectations are set, and implementation has begun.
+Most AI project failures aren't due to technical limitations - they stem from fundamental mismatches between the technology and the use case. Teams discover these incompatibilities too late: after budgets are allocated, expectations are set, and implementation has begun.
 
 ### Common scenarios we see:
 - High-risk applications deployed without adequate safeguards
@@ -16,7 +16,7 @@ Most AI project failures aren't due to technical limitations—they stem from fu
 - Projects that fail because the underlying data isn't suitable for AI processing
 - Teams lacking the operational capabilities needed to maintain AI systems safely
 
-The core issue isn't enthusiasm for AI—it's the absence of structured decision-making processes that systematically evaluate whether AI is the right approach.
+The core issue isn't enthusiasm for AI - it's the absence of structured decision-making processes that systematically evaluate whether AI is the right approach.
 
 ## The Solution
 
@@ -24,8 +24,8 @@ The AI Decision Framework provides expert-guided evaluation processes that help 
 
 ### Why Use This Framework
 
-- **Fail fast** - Drop weak AI ideas early and save valuable time and resources
-- **De-risk early** - Identify legal, reputational, and technical challenges before they scale
+- **Filter effectively** - Drop poorly suited use cases early and save valuable time and resources
+- **Identify risks early** - Systematically identify technical, legal, and reputational challenges progressively before implementation begins
 - **Standardise evaluation** - Make consistent decisions across your organisation and product teams
 - **Build expertise** - Develop your team's AI decision-making capabilities through structured, educational feedback
 
@@ -70,14 +70,14 @@ Our foundational assessment evaluates whether Generative AI is appropriate for y
 - **Privacy and compliance** - Evaluating personal data handling and regulatory implications
 - **Operational readiness** - Your organisation's ability to build and maintain necessary safeguards
 
-The assessment typically takes 10-15 minutes and provides immediate, actionable results. No prior AI expertise required—the framework guides you through everything you need to know.
+The assessment typically takes 10-15 minutes and provides immediate, actionable results. No prior AI expertise required - the framework guides you through everything you need to know.
 
 [Link to assessment when deployed]
 
 ## Documentation
 
 ### For Content Authors
-- **[Assessment Content Guide](assessment-content-guide.md)** - Detailed guidance on creating high-quality questions, options, and feedback content that provides clear, actionable guidance to users.
+- **[Assessment Content Guide](assessment-content-guide.md)** - Detailed guidance on creating high-quality sections, questions, options, and feedback content that provides clear, actionable guidance to users.
 
 ### For Developers
 - **[Technical Architecture](technical-architecture.md)** - Complete implementation details, component structure, data flow, and development guidelines for extending and maintaining the framework.
