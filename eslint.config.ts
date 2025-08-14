@@ -33,6 +33,7 @@ export default config(
             "**/*.test.{ts,tsx}",
             "**/test/**/*",
             "eslint.config.ts",
+            "vite.config.ts",
           ],
         },
       ],
