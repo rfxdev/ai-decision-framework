@@ -1,25 +1,45 @@
 {
   "name": "ai-decision-framework",
-  "type": "module",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "A structured evaluation platform that guides teams through the critical factors determining AI project success. Get clear, evidence-based recommendations in minutes.",
+  "author": "Richard Mills",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://yourusername.github.io/ai-decision-framework",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/ai-decision-framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ai-decision-framework/issues"
+  },
+  "keywords": [
+    "ai",
+    "decision-framework",
+    "assessment",
+    "evaluation",
+    "generative-ai",
+    "technology-evaluation",
+    "risk-assessment",
+    "web-application"
+  ],
   "engines": {
-    "node": "24.5.0",
-    "npm": ">=11.0.0"
+    "node": ">=22.18.0",
+    "npm": ">=10.9.0"
   },
   "volta": {
-    "node": "24.5.0"
+    "node": "22.18.0"
   },
   "scripts": {
-    "build": "tsc && vite build",
-    "check-all": "npm run lint && npm run format:check",
+    "build": "vite build",
+    "check-all": "npm run lint && npm run format:check && tsc",
     "dev": "vite",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "lint": "eslint . --ext ts,tsx",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "preview": "vite preview",
+    "prebuild": "npm run schema:generate:all && npm run check-all",
     "schema:generate": "ts-json-schema-generator --path src/interfaces/assessment.ts --tsconfig tsconfig.json --expose export",
     "schema:generate:all": "npx rimraf schema && npm run schema:generate:assessment && npm run schema:generate:page && npm run schema:generate:option",
     "schema:generate:assessment": "npm run schema:generate -- --type Assessment --out schema/assessment.schema.json && node tools/enhance-schema.js",
@@ -37,6 +57,8 @@
   "devDependencies": {
     "@eslint/js": "9.31.0",
     "@types/eslint__js": "8.42.3",
+    "@types/eslint-plugin-jsx-a11y": "6.10.0",
+    "@types/node": "22.16.5",
     "@types/react-dom": "19.1.6",
     "@types/react-router-dom": "5.3.3",
     "@vitejs/plugin-react": "4.7.0",
@@ -44,9 +66,12 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-import-resolver-typescript": "4.4.4",
     "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-n": "17.20.0",
     "eslint-plugin-perfectionist": "4.15.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-perf": "3.3.3",
     "eslint-plugin-react-refresh": "0.4.20",
     "jiti": "2.5.1",
     "prettier": "3.6.2",

@@ -1,7 +1,9 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function NotFoundPage() {
   const navigate = useNavigate();
+  const handleStartOver = useCallback(() => navigate("/"), [navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -16,7 +18,7 @@ export default function NotFoundPage() {
 
           <div className="flex justify-center space-x-4">
             <button
-              onClick={() => navigate("/")}
+              onClick={handleStartOver}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Start Over
