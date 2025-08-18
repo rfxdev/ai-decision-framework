@@ -41,12 +41,18 @@ export default config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       ...reactPerf.configs.recommended.rules,
+      "@typescript-eslint/consistent-type-exports": "error",
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "import/no-default-export": "error",
       "import/no-extraneous-dependencies": [
         "error",
         {
           devDependencies: ["src/**/*.test.{ts,tsx}", "src/**/test/**/*"],
         },
       ],
+      "perfectionist/sort-classes": "off",
       "perfectionist/sort-jsx-props": "off",
       "perfectionist/sort-modules": "off",
       "react-refresh/only-export-components": [
@@ -76,6 +82,8 @@ export default config(
       },
     },
     rules: {
+      "@typescript-eslint/consistent-type-exports": "error",
+      "@typescript-eslint/consistent-type-imports": "error",
       "import/no-extraneous-dependencies": [
         "error",
         {

@@ -11,7 +11,7 @@
           "type": "string"
         },
         "id": {
-          "type": "string"
+          "$ref": "#/definitions/AssessmentID"
         },
         "metadata": {
           "$ref": "#/definitions/AssessmentMetadata"
@@ -68,24 +68,36 @@
       ],
       "type": "object"
     },
+    "AssessmentID": {
+      "const": "gen-ai-suitability",
+      "type": "string"
+    },
     "AssessmentMetadata": {
       "additionalProperties": false,
       "properties": {
         "description": {
+          "description": "Brief explanation of what this assessment evaluates and its purpose",
+          "type": "string"
+        },
+        "estimatedTime": {
+          "description": "How long will the assessment take",
           "type": "string"
         },
         "sections": {
+          "description": "Ordered list of evaluation sections that make up this assessment",
           "items": {
             "$ref": "#/definitions/AssessmentSection"
           },
           "type": "array"
         },
         "title": {
+          "description": "Display name for this assessment shown to users",
           "type": "string"
         }
       },
       "required": [
         "description",
+        "estimatedTime",
         "sections",
         "title"
       ],
@@ -98,7 +110,7 @@
           "type": "string"
         },
         "id": {
-          "type": "string"
+          "$ref": "#/definitions/SectionID"
         },
         "pageOrder": {
           "items": {
@@ -155,6 +167,28 @@
       ],
       "type": "string"
     },
+    "GenAiPageID": {
+      "enum": [
+        "bias-impact",
+        "data-structure",
+        "deterministic-outputs",
+        "domain-knowledge",
+        "failure-recovery",
+        "monitoring",
+        "pii-data-location",
+        "public-facing",
+        "risk-impact"
+      ],
+      "type": "string"
+    },
+    "GenAiSectionID": {
+      "enum": [
+        "implementation-operations",
+        "risk-safety",
+        "technical-feasibility"
+      ],
+      "type": "string"
+    },
     "Page": {
       "additionalProperties": false,
       "properties": {
@@ -179,18 +213,7 @@
       "type": "object"
     },
     "PageID": {
-      "enum": [
-        "bias-impact",
-        "data-structure",
-        "deterministic-outputs",
-        "domain-knowledge",
-        "failure-recovery",
-        "monitoring",
-        "pii-data-location",
-        "public-facing",
-        "risk-impact"
-      ],
-      "type": "string"
+      "$ref": "#/definitions/GenAiPageID"
     },
     "Question": {
       "additionalProperties": false,
@@ -244,6 +267,9 @@
         "text"
       ],
       "type": "object"
+    },
+    "SectionID": {
+      "$ref": "#/definitions/GenAiSectionID"
     }
   }
 }

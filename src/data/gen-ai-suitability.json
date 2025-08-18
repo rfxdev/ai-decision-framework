@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/assessment.schema.json",
-  "id": "ai-suitability-assessment",
+  "id": "gen-ai-suitability",
   "metadata": {
     "title": "AI Suitability Assessment",
     "description": "Evaluate whether Gen AI is right for your use case",
@@ -27,7 +27,8 @@
         "description": "Assess organisational capability to build and maintain the AI solution",
         "pageOrder": ["monitoring", "pii-data-location", "public-facing"]
       }
-    ]
+    ],
+    "estimatedTime": "Approximately 10 minutes"
   },
   "pages": {
     "data-structure": {

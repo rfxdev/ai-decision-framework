@@ -39,6 +39,20 @@
       ],
       "type": "string"
     },
+    "GenAiPageID": {
+      "enum": [
+        "bias-impact",
+        "data-structure",
+        "deterministic-outputs",
+        "domain-knowledge",
+        "failure-recovery",
+        "monitoring",
+        "pii-data-location",
+        "public-facing",
+        "risk-impact"
+      ],
+      "type": "string"
+    },
     "Page": {
       "additionalProperties": false,
       "properties": {
@@ -63,18 +77,7 @@
       "type": "object"
     },
     "PageID": {
-      "enum": [
-        "bias-impact",
-        "data-structure",
-        "deterministic-outputs",
-        "domain-knowledge",
-        "failure-recovery",
-        "monitoring",
-        "pii-data-location",
-        "public-facing",
-        "risk-impact"
-      ],
-      "type": "string"
+      "$ref": "#/definitions/GenAiPageID"
     },
     "Question": {
       "additionalProperties": false,

@@ -1,3 +1,5 @@
+import type { JSX } from "react";
+
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -13,7 +15,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 
-export default function StartPage() {
+export function HomePage(): JSX.Element {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Header */}
@@ -50,13 +52,13 @@ export default function StartPage() {
             critical factors determining AI project success. Get clear,
             evidence-based recommendations before implementation begins.
           </p>
-          <button
-            disabled
-            className="bg-slate-400 text-white font-semibold py-4 px-8 rounded-lg inline-flex items-center space-x-2 text-lg cursor-not-allowed"
+          <a
+            href="/assessment/gen-ai-suitability"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg inline-flex items-center space-x-2 text-lg transition-colors"
           >
             <span>Start Assessment</span>
             <ArrowRightIcon className="h-5 w-5" />
-          </button>
+          </a>
         </div>
 
         {/* Problem Section */}
@@ -301,13 +303,13 @@ export default function StartPage() {
               Immediate results
             </span>
           </div>
-          <button
-            disabled
-            className="bg-slate-400 text-white font-semibold py-4 px-8 rounded-lg inline-flex items-center space-x-2 text-lg cursor-not-allowed"
+          <a
+            href="/assessment/gen-ai-suitability"
+            className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg inline-flex items-center space-x-2 text-lg border-2 border-white transition-colors"
           >
             <span>Begin Assessment</span>
             <ArrowRightIcon className="h-5 w-5" />
-          </button>
+          </a>
         </section>
       </main>
     </div>

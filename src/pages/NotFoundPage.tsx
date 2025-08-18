@@ -1,7 +1,9 @@
+import type { JSX } from "react";
+
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function NotFoundPage() {
+export function NotFoundPage(): JSX.Element {
   const navigate = useNavigate();
   const handleStartOver = useCallback(() => navigate("/"), [navigate]);
 
