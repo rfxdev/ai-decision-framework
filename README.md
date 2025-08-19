@@ -11,6 +11,7 @@ Teams are rushing into AI implementations without systematic evaluation processe
 Most AI project failures aren't due to technical limitations - they stem from fundamental mismatches between the technology and the use case. Teams discover these incompatibilities too late: after budgets are allocated, expectations are set, and implementation has begun.
 
 ### Common scenarios we see:
+
 - High-risk applications deployed without adequate safeguards
 - Complex AI solutions built for problems that simple software could solve better
 - Projects that fail because the underlying data isn't suitable for AI processing
@@ -72,14 +73,20 @@ Our foundational assessment evaluates whether Generative AI is appropriate for y
 
 The assessment typically takes 10-15 minutes and provides immediate, actionable results. No prior AI expertise required - the framework guides you through everything you need to know.
 
-[Link to assessment when deployed]
+**[🚀 Start Your Assessment Now](https://ai-decision-framework.vercel.app)**
+
+_Get evidence-based recommendations for your AI project in minutes. Completely free, no registration required._
+
+> **Note**: The assessment is currently in early development. You can explore the interface and see how the framework will work, but the full evaluation logic and recommendations are still being implemented.
 
 ## Documentation
 
 ### For Content Authors
+
 - **[Assessment Content Guide](assessment-content-guide.md)** - Detailed guidance on creating high-quality sections, questions, options, and feedback content that provides clear, actionable guidance to users.
 
 ### For Developers
+
 - **[Technical Architecture](technical-architecture.md)** - Complete implementation details, component structure, data flow, and development guidelines for extending and maintaining the framework.
 
 ## Technology
@@ -91,17 +98,21 @@ Questions and decision logic are defined declaratively, with automatic visual fl
 ## Roadmap
 
 ### Phase 1: Implementation Guidance
+
 Once Gen AI suitability is established, guide teams through implementation decisions:
+
 - **Training vs Fine-tuning Assessment** - Determine the most appropriate model development approach
 - **Model Selection Criteria** - Navigate the landscape of available models and capabilities
 - **Architecture & Deployment Planning** - Evaluate infrastructure and operational requirements
 
 ### Phase 2: Broader AI Decision Support
+
 Expand beyond Generative AI to comprehensive AI technology evaluation:
+
 - **Classical ML Suitability** - When traditional machine learning approaches are more appropriate
 - **Automation vs AI Assessment** - Distinguishing between process automation and AI requirements
 - **Hybrid Approach Evaluation** - Combining multiple technologies for optimal outcomes
 
 ---
 
-*Inspired by [Gen AI Evaluation Framework](https://github.com/eugeniosegala/gen-ai-evaluation-framework)*
+_Inspired by [Gen AI Evaluation Framework](https://github.com/eugeniosegala/gen-ai-evaluation-framework)_
